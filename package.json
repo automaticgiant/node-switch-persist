@@ -1,0 +1,27 @@
+{
+  "name": "node-switch-persist",
+  "version": "0.0.0",
+  "description": "node-switch-persist is a simple module to persist configuration, including switches, in a local dotfile in your project's directory. It was created to fill a niche that was just outside other packages.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/automaticgiant/node-switch-persist"
+  },
+  "keywords": [
+    "configuration",
+    "switch",
+    "persist",
+    "preferences"
+  ],
+  "author": "Hunter Morgan <automaticgiant@gmail.com>",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/automaticgiant/node-switch-persist/issues"
+  },
+  "homepage": "https://github.com/automaticgiant/node-switch-persist",
+  "dependencies": {
+    "extend": "^1.3.0",
+    "node-persist": "0.0.2",
+    "yargs": "^1.3.1"
+  }
+}

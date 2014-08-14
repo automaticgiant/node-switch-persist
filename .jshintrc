@@ -1,0 +1,28 @@
+{
+  // options given at http://www.jshint.com/docs/options/
+  // also can check defaults at
+  // https://github.com/jshint/jshint/blob/master/src/jshint.js
+  // jshint defaults have been omitted
+
+  // enforcing options
+  "enforceall": true,
+  "indent": 2,
+  "quotmark": "single",
+  "maxparams": 4,
+  "maxdepth": 5,
+  "maxstatements": 10,
+  "maxcomplexity": 10,
+  "maxlen": 80,
+  "latedef": true,
+
+  // relaxing options
+  "strict": true,
+
+  // environments
+  "node": true,
+  // unlisted
+  "regexp": true,
+  "trailing": true,
+  "smarttabs": true,
+  "white": true
+}
