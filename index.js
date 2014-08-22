@@ -3,11 +3,12 @@
 var args = require('yargs').argv;
 var storage = require('node-persist');
 var path = require('path');
-var _ = require('underscore');
+var underscore = require('underscore');
 
 /**
- * defaults config object for instances
- * also enumerates and documents options
+ * Defaults config object for instances.
+ * Enumerates and documents options - template for passed in object.
+ * @namespace
  * @type {Object}
  */
 var defaults = {
@@ -28,24 +29,42 @@ var defaults = {
 };
 
 /**
+ * path logic
+ * @private
+ * @param  {Object} config passed in config object
+ * @return {String}        path to persist preferences
+ */
+function interpretDir(config){
+  if (typeof config.dir !== 'undefined') {
+    //./ or .\ doesn't normally get handled intelligently
+    if (config.dir.search('.' + path.sep) === 0) {
+      return process.cwd() + path.sep + config.dir.substr(2);
+    }
+    return config.dir;
+  } else {
+    //sane default
+    return process.cwd() + path.sep + '.persist';
+  }
+}
+
+/**
  * Constructor for node-persist instance with a preferences key that handles
  * command-line switches
  * @param {Object} config object like defaults
  */
 function Preferences(config) {
+  config = config || {};
   // allow an existing Preferences instance to be reused
-  // if (config === preferences)
-  // {
-  //   return config;
-  // }
+  if (config === storage)
+  {
+    return config;
+  }
 
-  _.defaults(config, defaults);
-  _.defaults(config.rememberableKeys, defaults.rememberableKeys);
+  underscore.defaults(config, defaults);
+  underscore.defaults(config.rememberableKeys, defaults.rememberableKeys);
 
   storage.initSync({
-    //need pass this out to get evaled by module consumer maybe
-    dir: (typeof __dirname !== 'undefined' ? __dirname : process.cwd()) +
-      path.sep + (_.has(config, 'dir') ? config.dir : '.persist')
+    dir: interpretDir(config)
   });
 
   /**
@@ -54,18 +73,20 @@ function Preferences(config) {
    */
   var preferences = storage.getItem('preferences') || {};
 
-  if (_.has(args, 'remember')) {
+  //remember rememberables
+  if (underscore.has(args, 'remember')) {
     Object.keys(config.rememberableKeys).forEach(function (rememberableKey) {
       if (config.rememberableKeys[rememberableKey] &&
-          _.has(args, rememberableKey)) {
+          underscore.has(args, rememberableKey)) {
         preferences[rememberableKey] = args[rememberableKey];
       }
     });
+    //update persisted data
     storage.setItem('preferences', preferences);
   }
 
   //combine args and preferences with args taking precedence
-  _.extend(preferences, args);
+  underscore.extend(preferences, args);
 
   return storage;
 }
