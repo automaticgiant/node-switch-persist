@@ -55,7 +55,7 @@ function interpretDir(config){
 function Preferences(config) {
   config = config || {};
   // allow an existing Preferences instance to be reused
-  if (config === storage)
+  if (underscore.has(config, 'store') && config.store === storage)
   {
     return config;
   }
@@ -88,7 +88,10 @@ function Preferences(config) {
   //combine args and preferences with args taking precedence
   underscore.extend(preferences, args);
 
-  return storage;
+  return {
+    store: storage,
+    preferences: preferences
+  };
 }
 
 module.exports = Preferences;
