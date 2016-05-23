@@ -1,3 +1,7 @@
+# PROJECT STATUS
+This is not maintained. [rc](https://github.com/dominictarr/rc) is probably better. You can have the repo if you want.
+
+
 # node-switch-persist
 
 node-switch-persist is a simple module to persist configuration, including
